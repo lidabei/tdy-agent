@@ -1,0 +1,29 @@
+# 若初始化失败，先彻底清理再 up：
+#   docker compose down -v
+#   docker compose up -d
+
+services:
+  postgres:
+    image: postgres:16
+    container_name: tdy-postgres
+    restart: unless-stopped
+    environment:
+      POSTGRES_DB: tdy_manager
+      POSTGRES_USER: tdy
+      POSTGRES_PASSWORD: tdy123
+    ports:
+      - "5432:5432"
+    volumes:
+      - tdy_pg_data:/var/lib/postgresql/data
+    # 部分受限环境需要放开 seccomp，避免容器内异常
+    security_opt:
+      - seccomp:unconfined
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U tdy -d tdy_manager"]
+      interval: 5s
+      timeout: 5s
+      retries: 30
+      start_period: 20s
+
+volumes:
+  tdy_pg_data:

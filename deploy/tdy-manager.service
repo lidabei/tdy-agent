@@ -1,0 +1,20 @@
+[Unit]
+Description=TDY Manager
+After=network.target postgresql.service
+Wants=network-online.target
+
+[Service]
+Type=simple
+User=tdy
+Group=tdy
+WorkingDirectory=/opt/tdy-manager
+ExecStart=/opt/tdy-manager/tdy-server
+Restart=on-failure
+RestartSec=3
+LimitNOFILE=65535
+
+# 可选：用环境变量覆盖（若你在代码里支持的话；当前以 config.yaml 为准）
+# Environment=GIN_MODE=release
+
+[Install]
+WantedBy=multi-user.target

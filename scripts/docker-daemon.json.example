@@ -1,0 +1,16 @@
+# Docker 镜像加速（解决 Docker Hub 超时）
+#
+# Linux 写入：/etc/docker/daemon.json
+# 然后执行：
+#   systemctl daemon-reload
+#   systemctl restart docker
+#
+# 注意：部分公共镜像站会变更/失效，若仍超时可换阿里云个人加速器地址。
+
+{
+  "registry-mirrors": [
+    "https://docker.1ms.run",
+    "https://docker.xuanyuan.me",
+    "https://docker.m.daocloud.io"
+  ]
+}

@@ -1,0 +1,27 @@
+# 生产环境配置示例：复制到服务器 /opt/tdy-manager/config.yaml 后修改
+database:
+  dbtype: postgres
+  host: 127.0.0.1          # 或内网 PG 地址
+  name: tdy_manager
+  password: CHANGE_ME_DB_PASSWORD
+  port: 5432
+  username: postgres
+  max_open_conns: 50
+  max_idle_conns: 20
+
+server:
+  port: 8080
+  mode: release
+  # 务必换成长随机串，例如: openssl rand -hex 32
+  jwt_secret: CHANGE_ME_JWT_SECRET
+  password_min_len: 8
+  upload_dir: uploads
+  # 相对二进制所在目录
+  static_dir: static
+  cors_origins:
+    - https://your-domain.com
+    - http://your-server-ip
+
+business:
+  withdraw_max_yuan: 50000
+  withdraw_daily_max_yuan: 100000
